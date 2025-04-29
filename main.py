@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from flask import Flask, render_template, request
 import pickle
-
+import os
 app = Flask(__name__)
 
 data = pd.read_csv('Cleaned_data.csv', index_col=0)
@@ -36,6 +36,6 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)    
-
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
     
