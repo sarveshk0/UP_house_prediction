@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UTTAR PRADESH HOUSE PREDCTION APP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  </head>
+  <body class="bg-dark">
+    <div class="container">
+          <div class="row">
+                <div class="card" style="width:100%; height:100%; margin-top: 50px;">
+                     <div class="card-header" style="text-align: center;">
+                          <h1>Welcome to House Price Predictor</h1>
+                            <h3>(Only Noida, Ghaziabad, Greater Noida and Lucknow City)</h3>
+                  
+                                 <div class="card-body">
+                                    <form method="post"    accept-charset="utf-8">
+                                        <div class="row">
+                                             <div class="col-md-6 form-group" style="text-align:center ;">
+                                                <label><b>City:</b></label>
+                                                <select class="selectpicker form-control" id="City" name="City" required="1">
+                                                  {% for city in City %}
+                                                  <option value="{{ city }}">{{ city }}</option>
+                                                  {% endfor %}
+
+                                                </select>
+                                             </div>
+
+                                             <div class="col-md-6 form-group" style="text-align:center ;">
+                                                <label><b>Apartement:</b></label>
+                                                 <input type="text" class="form-control" id="Apartement" name="Apartement" required="1" placeholder="Enter BHK">
+                                             </div>
+
+                                             <div class="col-md-6 form-group" style="text-align:center ;">
+                                                <label><b>Rupee_per_Area:</b></label>
+                                                    <input type="text" class="form-control" id="Rupee_per_area(sq-feet) " name="Rupee_per_area(sq-feet)" required="1" placeholder="Enter price what you want at sq feet">
+                                             </div>
+
+                                             <div class="col-md-6 form-group" style="text-align:center ;">
+                                                <label><b>Area:</b></label>
+                                                    <input type="text" class="form-control" id="Area" name="Area" required="1" placeholder="Enter Area">
+                                             </div>
+
+                                               <div class="col-md-2 form-group" style="margin-top: 10px;">
+                                                <button type="button" class="btn btn-primary form-control" onclick="send_data()">Predict</button>
+
+                                               </div>
+
+                                        </div>
+
+                                    </form>
+                                    <br/>
+
+                                    <div class="col-md-12" style="text-align:center">
+                                        <h3><span id="prediction"></span></h3>
+                                    </div>
+
+                                 </div>
+                </div>
+          </div>
+    </div>
+
+ 
+
+        <script>
+             function form_handler(event){
+              event.preventDefault();   //dont submit to the form normally
+             }
+
+          function send_data(){
+              document.querySelector('form').addEventListener('submit', form_handler); //prevent the form from submitting normally 
+               var fd= new FormData(document.querySelector('form')); //get the form data
+               var xhr=new XMLHttpRequest(); //create a new XMLHttpRequest object
+            
+                xhr.open('POST','/predict',true); //open a new POST request to the serve
+            
+               document.getElementById('prediction').innerHTML="Loading..."; //set the prediction element to loading
+               xhr.onreadystatechange= function(){ //when the request is complete
+                 if(xhr.readyState==XMLHttpRequest.DONE){
+                  document.getElementById('prediction').innerHTML="Prediction:Rs" +xhr.responseText; //set the prediction element to the response text
+                 } 
+              }
+                xhr.onload=function(){};
+                xhr.send(fd); //send the form data to the server
+             
+              }
+
+          </script>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
+  </body>
+</html>
