@@ -21,10 +21,10 @@ def predict():
     City=request.form.get('City')
     Apartement=request.form.get('Apartement')
     Area=request.form.get('Area')
-    Rupee_per_area=request.form.get('Rupee_per_area(sq-feet)')
+    Rupee_per_area(sq_ft)=request.form.get('Rupee_per_area(sq-feet)')
 
     print(City, Apartement, Area, Rupee_per_area)
-    input= pd.DataFrame([[City, Apartement, Area, Rupee_per_area]],
+    input= pd.DataFrame([[City, Apartement, Area, Rupee_per_area(sq_ft)]],
                         columns=['City', 'Apartement', 'Area', 'Rupee_per_area(sq-feet)'])
     print(input)
     prediction = pipe.predict(input)[0] * 1e5
